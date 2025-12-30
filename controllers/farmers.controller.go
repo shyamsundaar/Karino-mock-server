@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/wpcodevo/golang-fiber-mysql/initializers"
-	"github.com/wpcodevo/golang-fiber-mysql/models"
-	"github.com/wpcodevo/golang-fiber-mysql/query"
+	"github.com/shyamsundaar/karino-mock-server/initializers"
+	"github.com/shyamsundaar/karino-mock-server/models"
+	"github.com/shyamsundaar/karino-mock-server/query"
 	"gorm.io/gorm"
 )
 

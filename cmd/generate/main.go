@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/wpcodevo/golang-fiber-mysql/models"
+	"github.com/shyamsundaar/karino-mock-server/models"
 	"gorm.io/gen"
 )
 

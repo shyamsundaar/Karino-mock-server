@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/wpcodevo/golang-fiber-mysql/models"
+	"github.com/shyamsundaar/karino-mock-server/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
