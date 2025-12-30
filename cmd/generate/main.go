@@ -14,7 +14,7 @@ func main() {
 
 	// Use the structs from your models package
 	g.ApplyBasic(
-		models.Detail{},
+		models.FarmerDetails{},
 	)
 
 	// Build the type-safe DAO

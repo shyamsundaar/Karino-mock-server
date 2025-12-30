@@ -23,7 +23,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:8000
-// @BasePath /api
+// @BasePath /
 func main() {
 	app := fiber.New()
 	micro := fiber.New()
@@ -31,47 +31,50 @@ func main() {
 	// Middleware
 	app.Use(logger.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:3000",
-		AllowHeaders:     "Origin, Content-Type, Accept",
-		AllowMethods:     "GET, POST, PATCH, DELETE",
-		AllowCredentials: true,
+		AllowOrigins: "*",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+		AllowMethods: "GET,POST,PUT,PATCH,DELETE,OPTIONS",
 	}))
 
 	// Swagger Route (Accessible at http://localhost:8000/swagger/index.html)
 	app.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Mount API routes
-	app.Mount("/api", micro)
+	app.Mount("/", micro)
 
 	// --- Details Routes ---
-	micro.Route("/details", func(router fiber.Router) {
-		router.Post("/", controllers.CreateDetailHandler)
-		router.Get("", controllers.FindDetails)
-	})
-	micro.Route("/details/:detailId", func(router fiber.Router) {
-		router.Get("", controllers.FindDetailById)
-		router.Patch("", controllers.UpdateDetail)
-		router.Delete("", controllers.DeleteDetail)
-	})
+	micro.Route("/spic_to_erp", func(router fiber.Router) {
+		router.Route("/customers", func(router fiber.Router) {
+			router.Post("/:coopId/farmers", controllers.CreateCustomerDetailHandler)
+			router.Get("/:coopId/farmerslist", controllers.FindDetailsHandler) // <--- ADD THIS
 
-	// --- Notes Routes ---
-	micro.Route("/notes", func(router fiber.Router) {
-		router.Post("/", controllers.CreateDetailHandler)
-		router.Get("", controllers.FindDetails)
-	})
-	micro.Route("/notes/:noteId", func(router fiber.Router) {
-		router.Delete("", controllers.DeleteDetail)
-		router.Get("", controllers.FindDetailById)
-		router.Patch("", controllers.UpdateDetail)
-	})
-
-	// Health Check
-	micro.Get("/healthchecker", func(c *fiber.Ctx) error {
-		return c.Status(200).JSON(fiber.Map{
-			"status":  "success",
-			"message": "Welcome to Golang, Fiber, and GORM",
 		})
 	})
+
+	// micro.Route("/details/:detailId", func(router fiber.Router) {
+	// 	router.Get("", controllers.FindDetailById)
+	// 	//router.Patch("", controllers.UpdateDetail)
+	// 	router.Delete("", controllers.DeleteDetail)
+	// })
+
+	// // --- Notes Routes ---
+	// micro.Route("/notes", func(router fiber.Router) {
+	// 	router.Post("/", controllers.CreateCustomerDetailHandler)
+	// 	router.Get("", controllers.FindDetails)
+	// })
+	// micro.Route("/notes/:noteId", func(router fiber.Router) {
+	// 	router.Delete("", controllers.DeleteDetail)
+	// 	router.Get("", controllers.FindDetailById)
+	// 	//router.Patch("", controllers.UpdateDetail)
+	// })
+
+	// // Health Check
+	// micro.Get("/healthchecker", func(c *fiber.Ctx) error {
+	// 	return c.Status(200).JSON(fiber.Map{
+	// 		"status":  "success",
+	// 		"message": "Welcome to Golang, Fiber, and GORM",
+	// 	})
+	// })
 
 	log.Fatal(app.Listen(":8000"))
 }
