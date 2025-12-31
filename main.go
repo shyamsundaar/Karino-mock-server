@@ -45,12 +45,17 @@ func main() {
 	// --- Details Routes ---
 	micro.Route("/spic_to_erp", func(router fiber.Router) {
 		router.Route("/customers", func(router fiber.Router) {
-			router.Post("/:coopId/cust_farmers", controllers.CreateCustomerDetailHandler)
-			router.Get("/:coopId/cust_farmerslist", controllers.FindCustomerDetailsHandler) // <--- ADD THIS
-			router.Post("/:coopId/vendor_farmers", controllers.CreateVendorDetailHandler) // <--- ADD THIS
-			router.Get("/:coopId/vendor_farmerslist", controllers.FindVendorDetailsHandler) // <--- ADD THIS
-			router.Get("/:coopId/vendor_farmerslist", controllers.GetCustomerDetailHandler) // <--- ADD THIS
-			router.Get("/:coopId/vendor_farmerslist", controllers.GetVendorDetailHandler) // <--- ADD THIS
+			router.Post("/:coopId/farmers", controllers.CreateCustomerDetailHandler)
+			// router.Get("/:coopId/cust_farmerslist", controllers.FindCustomerDetailsHandler) // <--- ADD THIS
+			// router.Post("/:coopId/vendor_farmers", controllers.CreateVendorDetailHandler)   // <--- ADD THIS
+			// router.Get("/:coopId/vendor_farmerslist", controllers.FindVendorDetailsHandler) // <--- ADD THIS
+			// router.Get("/:coopId/vendor_farmerslist", controllers.GetCustomerDetailHandler) // <--- ADD THIS
+			// router.Get("/:coopId/vendor_farmerslist", controllers.GetVendorDetailHandler)   // <--- ADD THIS
+		})
+
+		router.Route("/vendors", func(router fiber.Router) {
+			router.Post("/:coopId/farmers", controllers.CreateVendorDetailHandler)
+
 		})
 	})
 
